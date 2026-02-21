@@ -35,7 +35,7 @@ Some notes for this file:
 
 ### conky_weather
 
-This is my configuration to display a weather report on the opposite side of my monitor from the main info. This also includes a simple set of Conky config settings followed by the display settings to configure what is shown on my deaktop. In this case, all the work is done in a script, so this file is quite short.
+This is my configuration to display a weather report on the opposite side of my monitor from the main info. This also includes a simple set of Conky config settings followed by the display settings to configure what is shown on my workstation. In this case, all the work is done in a script, so this file is quite short.
 
 ![Matthew's conky_weather being displayed on his desktop](conky_weather.png "conky_weather")
 
