@@ -9,7 +9,7 @@ Learn more in the [Conky git repository](https://github.com/brndnmtthws/conky), 
 To use it, I place the files in `~/conky` on my machine and run the `start_conky.sh` script. The example screenshot comes from me running it on a Linux workstation running [Pop_OS! 24.04](https://system76.com/pop/) which uses [Wayland](https://wayland.freedesktop.org/).
 
 <img src="matthews_conky.png" style="display: block; margin: auto; width: 90%;" alt="Screenshot of Conky system monitor displaying detailed hardware and weather information on a black desktop background. Left side shows a weather forecast. The center shows a dramatic black and white skull illustration. Right side contains multiple text sections with system stats including system information, battery backup UPS status, storage details, CPU metrics, GPU information, network statistics, and remote service ports. The overall tone is technical and utilitarian, with a darker aesthetic suitable for a developer workstation." />
-
+Click to enlarge.
 
 ## Files included
 
