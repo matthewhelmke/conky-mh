@@ -1,0 +1,115 @@
+conky.config = {
+
+-- set to yes if you want Conky to be forked in the background
+	background = true,
+
+-- Update interval in seconds
+	update_interval = 1,
+	cpu_avg_samples = 1,
+	net_avg_samples = 1,
+
+-- Set to use Wayland
+	out_to_x = false,
+	out_to_wayland = true,
+
+-- Use double buffering (reduces flicker, may not work for everyone)
+	double_buffer = true,
+
+-- Window settings
+	own_window = true,
+	own_window_class = 'conky',
+	own_window_type = 'normal',
+	own_window_argb_visual = true,
+	own_window_argb_value = 0, -- Can set 0 to 255 with 0 fully transparent
+	own_window_transparent = true,
+	gap_x = 3200,
+	gap_y = 400,
+	use_xft = true,
+	font = 'AndaleMonoBold:size=14',
+
+
+-- ----- start display config -----
+
+};
+
+conky.text = [[
+${color c68be8}DATE /TIME  ${hr 2}${color E7E7E7}
+${time}
+
+${color c68be8}SYSTEM  ${hr 2}${color E7E7E7}
+${exec cat /etc/issue.net} on ${machine} host ${nodename}
+running ${sysname} kernel ${kernel} 
+${color grey}System uptime:${color E7E7E7}   ${uptime}
+
+${color c68be8}BATTERY BACKUP UPS  ${hr 2}
+${color grey}Current state: ${color E7E7E7}${execi 60 "sudo pwrstat -status | grep 'State' | cut -c 32-50"}
+${color grey}Battery capacity: ${color E7E7E7}${execi 60 "sudo pwrstat -status | grep 'Battery Capacity' | cut -c 32-35"} %
+${color grey}Remaining runtime: ${color E7E7E7}${execi 60 "sudo pwrstat -status | grep 'Remaining Runtime' | cut -c 32-35"} minutes
+
+${color c68be8}STORAGE  ${hr 2}
+${color grey}KLEVV CRAS C910 M.2 NVMe SSD 2TB: ${color E7E7E7}/
+  ${fs_used /} / ${fs_size /} - ${fs_used_perc /}%
+${color grey}KLEVV CRAS C910 M.2 NVMe SSD 4TB: ${color E7E7E7}/home/username/4TB_drive
+  ${fs_used /home/username/4TB_drive} / ${fs_size /home/username/4TB_drive} - ${fs_used_perc /home/username/4TB_drive}%
+${color grey}Buffalo LinkStation NAS: ${color E7E7E7}/media/username/buffalo
+  ${fs_used /media/username/buffalo} / ${fs_size /media/username/buffalo} - ${fs_used_perc /media/username/buffalo}%
+${color grey}Dropbox status:  ${color E7E7E7}${execi 10 "dropbox status"}
+
+${color c68be8}MEM / LOAD  ${hr 2}
+${color grey}RAM Usage:${color E7E7E7} ${mem} / ${memmax} - ${memperc}%
+${color grey}Load average:   ${color E7E7E7}${loadavg}
+${color grey}Processes:${color E7E7E7} ${processes}  ${color grey}Running:${color E7E7E7} ${running_processes}
+
+${color grey}Processes using the most CPU         ${alignr}PID     CPU%   MEM%
+${color E7E7E7} ${top name 1}${alignr}${top pid 1}   ${top cpu 1}   ${top mem 1}
+${color E7E7E7} ${top name 2}${alignr}${top pid 2}   ${top cpu 2}   ${top mem 2}
+${color E7E7E7} ${top name 3}${alignr}${top pid 3}   ${top cpu 3}   ${top mem 3}
+${color grey}Processes using the most memory 
+${color E7E7E7} ${top_mem name 1}${alignr}${top_mem pid 1}   ${top_mem cpu 1}   ${top_mem mem 1}
+${color E7E7E7} ${top_mem name 2}${alignr}${top_mem pid 2}   ${top_mem cpu 2}   ${top_mem mem 2}
+${color E7E7E7} ${top_mem name 3}${alignr}${top_mem pid 3}   ${top_mem cpu 3}   ${top_mem mem 3}
+
+${color c68be8}CPU INFO  ${hr 2}${color E7E7E7}
+${color grey}Model name: ${color E7E7E7}${execi 3600 lscpu | grep "Model name" | cut -c 42-76}
+  ${color grey}(has 2 CPU/core)
+01:${color E7E7E7}  ${cpu cpu1}%  ${color grey}02:${color E7E7E7}  ${cpu cpu2}%  ${color grey}03:${color E7E7E7}  ${cpu cpu3}%  ${color grey}04:${color E7E7E7}  ${cpu cpu4}%  ${color grey}05:${color E7E7E7}  ${cpu cpu5}%  ${color grey}06:${color E7E7E7}  ${cpu cpu6}%  ${color grey}
+07:${color E7E7E7}  ${cpu cpu7}%  ${color grey}08:${color E7E7E7}  ${cpu cpu8}%  ${color grey}09:${color E7E7E7}  ${cpu cpu9}%  ${color grey}10:${color E7E7E7}  ${cpu cpu10}%  ${color grey}11:${color E7E7E7}  ${cpu cpu11}%  ${color grey}12:${color E7E7E7}  ${cpu cpu12}%  ${color grey}
+
+${color grey}Average CPU freq:${color E7E7E7}  ${freq_g 0} GHz
+${color grey}Current CPU temp: ${color E7E7E7}${execi 2 sensors | grep "Tctl" | cut -c 15-22}
+${color grey}CPU temp limits: ${color E7E7E7}high = +81.0°C, crit = +101.0°C
+
+${execi 5 "bash ~/conky/get_gpu_info.sh"}${color c68be8}GPU  ${hr 2}
+${color grey}Model: ${color E7E7E7}${execi 3600 "sed -n '1p' ~/conky/data_files/gpu_info.txt"}
+${color grey}Driver Version: ${color E7E7E7}${execi 3600 "sed -n '2p' ~/conky/data_files/gpu_info.txt"}
+${color grey}Usage: ${color E7E7E7}${execi 5 "sed -n '3p' ~/conky/data_files/gpu_info.txt"}%
+${color grey}Performance State: ${color E7E7E7}${execi 5 "sed -n '4p' ~/conky/data_files/gpu_info.txt"}
+  ${color grey}Will range from P0 (max performance) to P12 (min)
+${color grey}Temp: ${color E7E7E7}${execi 5 "sed -n '5p' ~/conky/data_files/gpu_info.txt"}°C
+${color grey}Memory Used / Total: ${color E7E7E7}${execi 5 "sed -n '6p' ~/conky/data_files/gpu_info.txt"} / ${execi 3600 "sed -n '7p' ~/conky/data_files/gpu_info.txt"} MiB
+
+${color c68be8}WIRED NETWORKING${hr 2}
+${color grey}Local IP: ${color E7E7E7}${addr enx70886b876f74}
+${color grey}total download: ${color E7E7E7}${totaldown enx70886b876f74}
+${color grey}total upload: ${color E7E7E7}${totalup enx70886b876f74}
+${color grey}download speed: ${color E7E7E7}${downspeed enx70886b876f74}${color E7E7E7}    ${color grey}upload speed: ${color E7E7E7}${upspeed enx70886b876f74}
+
+${color c68be8}WIRELESS NETWORKING${hr 2}
+${color grey}ESSID: ${color E7E7E7}${wireless_essid wlp170s0}  ${color grey}AP: ${color E7E7E7}${wireless_ap wlp170s0}
+${color grey}Frequency:  ${color E7E7E7}${exec iwconfig wlp170s0 | grep "Frequency" | cut -c 35-44}
+${color grey}Mode: ${color E7E7E7}${wireless_mode wlp170s0}  ${color grey}Bitrate: ${color E7E7E7}${wireless_bitrate wlp170s0}
+${color grey}Local IP: ${color E7E7E7}${addr wlp170s0}  ${color grey}Link Quality: ${color E7E7E7}${wireless_link_qual_perc wlp170s0}
+${color grey}total download: ${color E7E7E7}${totaldown wlp170s0} ${color grey}total upload: ${color E7E7E7}${totalup wlp170s0}
+${color grey}download speed: ${color E7E7E7}${downspeed wlp170s0}${color E7E7E7} ${color grey} upload speed: ${color E7E7E7}${upspeed wlp170s0}
+
+${color c68be8}SHARED NETWORKING STATS${hr 2}
+${color grey}Public IP: ${color E7E7E7}${execi 600 bash /home/matt/conky/myip.sh}
+${color grey}Connections - Inbound: ${color E7E7E7}${tcp_portmon 1 32767 count}  ${color grey}Outbound: ${color E7E7E7}${tcp_portmon 32768 61000 count}  ${color grey}Total: ${color E7E7E7}${tcp_portmon 1 65535 count}
+${color grey}Outbound Connection ${alignr} Remote Service/Port${color E7E7E7}
+${tcp_portmon 1 65535 rhost 0} ${alignr} ${tcp_portmon 1 65535 rservice 0}
+${tcp_portmon 1 65535 rhost 1} ${alignr} ${tcp_portmon 1 65535 rservice 1}
+${tcp_portmon 1 65535 rhost 2} ${alignr} ${tcp_portmon 1 65535 rservice 2}
+${tcp_portmon 1 65535 rhost 3} ${alignr} ${tcp_portmon 1 65535 rservice 3}
+${tcp_portmon 1 65535 rhost 4} ${alignr} ${tcp_portmon 1 65535 rservice 4}
+${tcp_portmon 1 65535 rhost 5} ${alignr} ${tcp_portmon 1 65535 rservice 5}
+]];
