@@ -4,9 +4,11 @@
 
 Learn more in the [Conky git repository](https://github.com/brndnmtthws/conky), which has a useful wiki that you probably want to read through.
 
-**conky-mh** is nothing more than my personal Conky configuration. I've taken ideas from dozens of others over the many years I've used Conky, but what you see here is otherwise my work, especially the Bash scripts used to get information.
+**conky-mh** is nothing more than my personal Conky configuration. I've taken ideas from dozens of others over the many years I've used Conky, but what you see here is otherwise my work, especially the Bash scria weather forecast. The center shows pts used to get information.
 
-To use it, I place the files in `~/conky` on my machine and run the `start_conky.sh` script. The example screenshots come from me running it on a Linux workstation running [Pop_OS! 24.04](https://system76.com/pop/) which uses [Wayland](https://wayland.freedesktop.org/).
+To use it, I place the files in `~/conky` on my machine and run the `start_conky.sh` script. The example screenshot comes from me running it on a Linux workstation running [Pop_OS! 24.04](https://system76.com/pop/) which uses [Wayland](https://wayland.freedesktop.org/).
+
+<img src="matthews_conky.png" style="display: block; margin: auto; width: 90%;" alt="Screenshot of Conky system monitor displaying detailed hardware and weather information on a black desktop background. Left side shows a weather forecast. The center shows a dramatic black and white skull illustration. Right side contains multiple text sections with system stats including system information, battery backup UPS status, storage details, CPU metrics, GPU information, network statistics, and remote service ports. The overall tone is technical and utilitarian, with a darker aesthetic suitable for a developer workstation." />
 
 
 ## Files included
@@ -22,8 +24,6 @@ This section describes each of the files included in this repo, except for these
 
 Here you will find my main configuration, which includes a simple set of Conky config settings followed by the display settings to configure what is shown on my deaktop.
 
-![Matthew's conky_main being displayed on his desktop](conky_main.png "conky_main")
-
 Some notes for this file:
 
 - The battery backup UPS section uses `pwrstat`, which I've only tested with my [Cyberpower UPS](https://www.cyberpowersystems.com/) and which I originally downloaded from their site. I don't know if it's currently offered software, but it still works great for me, including in automation for triggering a power down event on the workstation X minutes after a blackout power loss. I've replaced the battery inside the UPS as the original aged out, otherwise it's been great for many years. Anyway, if you don't have the same setup, this section will probably need editing or removing. The app requires sudo privileges, so that may require some configuration on your machine to be able to use it in Conky; I added a line to my `/etc/sudoers` file to permit running the command to get status without requiring a password. I don't recommend doing that for `pwrstat` as a whole, though, since it can be used to shutdown your system among other things.
@@ -36,8 +36,6 @@ Some notes for this file:
 ### conky_weather
 
 This is my configuration to display a weather report on the opposite side of my monitor from the main info. This also includes a simple set of Conky config settings followed by the display settings to configure what is shown on my workstation. In this case, all the work is done in a script, so this file is quite short.
-
-![Matthew's conky_weather being displayed on his desktop](conky_weather.png "conky_weather")
 
 
 ### get_gpu_info.sh
