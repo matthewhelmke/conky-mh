@@ -103,7 +103,7 @@ ${color grey}total download: ${color E7E7E7}${totaldown wlp170s0} ${color grey}t
 ${color grey}download speed: ${color E7E7E7}${downspeed wlp170s0}${color E7E7E7} ${color grey} upload speed: ${color E7E7E7}${upspeed wlp170s0}
 
 ${color c68be8}SHARED NETWORKING STATS${hr 2}
-${color grey}Public IP: ${color E7E7E7}${execi 600 bash /home/matt/conky/myip.sh}
+${color grey}Public IP: ${color E7E7E7}${execi 600 bash ~/conky/get_my_ip.sh}
 ${color grey}Connections - Inbound: ${color E7E7E7}${tcp_portmon 1 32767 count}  ${color grey}Outbound: ${color E7E7E7}${tcp_portmon 32768 61000 count}  ${color grey}Total: ${color E7E7E7}${tcp_portmon 1 65535 count}
 ${color grey}Outbound Connection ${alignr} Remote Service/Port${color E7E7E7}
 ${tcp_portmon 1 65535 rhost 0} ${alignr} ${tcp_portmon 1 65535 rservice 0}
