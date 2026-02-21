@@ -4,7 +4,7 @@
 
 Learn more in the [Conky git repository](https://github.com/brndnmtthws/conky), which has a useful wiki that you probably want to read through.
 
-**conky-mh** is nothing more than my personal Conky configuration. I've taken ideas from dozens of others over the many years I've used Conky, but what you see here is otherwise my work, especially the Bash scria weather forecast. The center shows pts used to get information.
+**conky-mh** is nothing more than my personal Conky configuration. I've taken ideas from dozens of others over the many years I've used Conky, but what you see here is otherwise my work, especially the Bash scripts.
 
 To use it, I place the files in `~/conky` on my machine and run the `start_conky.sh` script. The example screenshot comes from me running it on a Linux workstation running [Pop_OS! 24.04](https://system76.com/pop/) which uses [Wayland](https://wayland.freedesktop.org/).
 
