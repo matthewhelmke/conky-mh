@@ -16,8 +16,7 @@ Click to enlarge.
 This section describes each of the files included in this repo, except for these, which are not needed to run my configuration:
 
 - `README.md`
-- `conky_main.png`
-- `conky_weather.png`
+- `matthews_conky.png`
 
 
 ### conky_main
