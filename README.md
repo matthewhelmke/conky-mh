@@ -25,7 +25,7 @@ Here you will find my main configuration, which includes a simple set of Conky c
 
 Some notes for this file:
 
-- The battery backup UPS section uses `pwrstat`, which I've only tested with my [Cyberpower UPS](https://www.cyberpowersystems.com/) and which I originally downloaded from their site. I don't know if it's currently offered software, but it still works great for me, including in automation for triggering a power down event on the workstation X minutes after a blackout power loss. I've replaced the battery inside the UPS as the original aged out, otherwise it's been great for many years. Anyway, if you don't have the same setup, this section will probably need editing or removing. The app requires sudo privileges, so that may require some configuration on your machine to be able to use it in Conky; I added a line to my `/etc/sudoers` file to permit running the command to get status without requiring a password. I don't recommend doing that for `pwrstat` as a whole, though, since it can be used to shutdown your system among other things.
+- The battery backup UPS section uses `pwrstat`, which I've only tested with my CyberPower UPS. Unless you have a similar setup, this section will probably need editing or removing. See `get_ups_info.sh` below for the `pwrstat` and `sudo` details.
 - In the Storage section, I list four devices. I hard-code the names of the devices mostly to make my life easier if/when I need them; you could just use labels like `/` or `filesystem root` and so on. Adjust to taste. I'm certain your main drive will be different and you may not have a secondary drive or a [Buffalo Linkstation NAS](https://buffaloamericas.com/products/category/network-attached-storage/Network-Attached-Storage-for-Home) or use [Dropbox](https://dropbox.com). Edit accordingly.
 - In the CPU section, unless you have the exact same CPU, you will need to make edits. There are probably too many or too few CPUs being polled, etc.
 - Unless you have an NVIDIA GPU, that section won't work for you and it may not work on all of their hardware, depending on age and what driver version you have.
@@ -49,6 +49,16 @@ This just uses `curl` to hit a web URL that returns just the external IP address
 There are many services like the sample I put in this file in this repo. The one shown here isn't actually what I use, but I tested it and it works fine. In my deployments I poll a file I placed on a web server I own, but it works the same way. I made the change because I would use services that would go down or because I enountered usage limits.
 
 
+### get_ups_info.sh
+
+I have a CyberPower UPS. This script makes a single `sudo pwrstat -status` call, parses out the state, battery capacity, and remaining runtime, and caches them in the `ups_info.txt` file in `data_files` as a one-item-per-line list of values. That file is parsed and those values are displayed with context in `conky_main`. Doing it this way runs `pwrstat` once per refresh instead of once per displayed value.
+
+Some notes:
+
+- `pwrstat` is [CyberPower](https://www.cyberpowersystems.com/) software that I originally downloaded from their site. I don't know if it's currently offered, but it still works great for me, including automation that triggers a workstation power-down X minutes after a blackout. I've replaced the battery inside the UPS as the original aged out; otherwise it's been great for many years. If you don't have the same setup, expect to edit or remove this section.
+- `pwrstat` requires sudo, so using it in Conky may take some configuration on your machine. I added a line to my `/etc/sudoers` file to permit running just the status command without a password. I don't recommend doing that for `pwrstat` as a whole, though, since it can shut down your system among other things.
+
+
 ### get_weather_report.sh
 
 This is the script that does all the heavy lifting for displaying the weather.
@@ -70,6 +80,7 @@ This is a simple startup script. The `sleep` lines are included to force a pause
 I left a couple of sample temp files in the `data_files` directory so you can see what the scripts create.
 
 - `gpu_info.txt` is created by `get_gpu_info.sh` where it is also explained.
+- `ups_info.txt` is created by `get_ups_info.sh` where it is also explained.
 - `openweathermap.json` is a sample of what is returned by the API call in `get_weather_report.sh`. See [OpenWeather One Call API 3.0](https://openweathermap.org/api/one-call-3) to learn about their API and parse the details of my simple query.
 
 
