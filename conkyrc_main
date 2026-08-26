@@ -40,11 +40,12 @@ ${color c68be8}SYSTEM  ${hr 2}${color E7E7E7}
 ${exec cat /etc/issue.net} on ${machine} host ${nodename}
 running ${sysname} kernel ${kernel} 
 ${color grey}System uptime:${color E7E7E7}   ${uptime}
+${color grey}Reboot needed:${color E7E7E7} ${if_existing /var/run/reboot-required}${color red}YES${color E7E7E7}${else}no${endif}
 
 ${color c68be8}BATTERY BACKUP UPS  ${hr 2}
-${color grey}Current state: ${color E7E7E7}${execi 60 "sudo pwrstat -status | grep 'State' | cut -c 32-50"}
-${color grey}Battery capacity: ${color E7E7E7}${execi 60 "sudo pwrstat -status | grep 'Battery Capacity' | cut -c 32-35"} %
-${color grey}Remaining runtime: ${color E7E7E7}${execi 60 "sudo pwrstat -status | grep 'Remaining Runtime' | cut -c 32-35"} minutes
+${execi 60 "bash ~/conky/get_ups_info.sh"}${color grey}Current state: ${color E7E7E7}${execi 60 "sed -n '1p' ~/conky/data_files/ups_info.txt"}
+${color grey}Battery capacity: ${color E7E7E7}${execi 60 "sed -n '2p' ~/conky/data_files/ups_info.txt"} %
+${color grey}Remaining runtime: ${color E7E7E7}${execi 60 "sed -n '3p' ~/conky/data_files/ups_info.txt"} minutes
 
 ${color c68be8}STORAGE  ${hr 2}
 ${color grey}KLEVV CRAS C910 M.2 NVMe SSD 2TB: ${color E7E7E7}/
